@@ -1,5 +1,10 @@
+type Page = {
+  title: string;
+  path: `/${string}`;
+};
+
 // We hardcode pages here, but you could get this information from some external source (e.g. CMS, DB, config file, etc).
-const pages = [
+const pages: Page[] = [
   { title: "Home", path: "/" },
   {
     title: "Showcase",
@@ -19,7 +24,7 @@ const pages = [
   },
 ];
 
-function processPage(page, index) {
+function processPage(page: Page, index: number) {
   return (
     <li key={index}>
       <a href={page.path}>{page.title}</a>
