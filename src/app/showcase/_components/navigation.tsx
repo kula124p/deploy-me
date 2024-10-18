@@ -10,22 +10,13 @@ type Page = {
 
 // We hardcode pages here, but you could get this information from some external source (e.g. CMS, DB, config file, etc).
 const pages: Page[] = [
-  { title: "Home", path: "/" },
   {
-    title: "Showcase",
-    path: "/showcase",
+    title: "Healthcare",
+    path: "/showcase/healthcare",
   },
   {
-    title: "Blog",
-    path: "/blog",
-  },
-  {
-    title: "About us",
-    path: "/about",
-  },
-  {
-    title: "Contact us",
-    path: "/contact",
+    title: "Banking",
+    path: "/showcase/banking",
   },
 ];
 
@@ -35,13 +26,7 @@ function processPage(page: Page, index: number, pathname: string) {
       <Link
         href={page.path}
         className={
-          page.path === "/"
-            ? pathname === page.path
-              ? "font-extrabold"
-              : ""
-            : pathname.startsWith(page.path)
-            ? "font-extrabold"
-            : ""
+          pathname === page.path ? "font-extrabold text-slate-600" : ""
         }
       >
         {page.title}
@@ -52,6 +37,7 @@ function processPage(page: Page, index: number, pathname: string) {
 
 export function Navigation() {
   const pathname = usePathname();
+  console.log(pathname);
   return (
     <ul className="flex justify-center space-x-4 mt-8">
       {pages.map((page, index) => processPage(page, index, pathname))}
