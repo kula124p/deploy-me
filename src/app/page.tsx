@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 type Page = {
   title: string;
   path: `/${string}`;
@@ -32,14 +34,27 @@ function processPage(page: Page, index: number) {
   );
 }
 
+function processPage_Link(page: Page, index: number) {
+  return (
+    <li key={index}>
+      <Link href={page.path}>{page.title}</Link>
+    </li>
+  );
+}
+
 export function Navigation() {
   return <ul className="flex space-x-4 mb-4">{pages.map(processPage)}</ul>;
+}
+
+function Navigation_Link() {
+  return <ul className="flex space-x-4 mb-4">{pages.map(processPage_Link)}</ul>;
 }
 
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center p-10">
       <Navigation />
+      <Navigation_Link />
       <h1 className="text-6xl font-extrabold tracking-tight">Home page</h1>
     </main>
   );
