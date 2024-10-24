@@ -1,4 +1,9 @@
+import { Metadata } from "next";
 import { Navigation } from "./_components/navigation";
+
+export const metadata: Metadata = {
+  title: "Showcase",
+};
 
 export default function ShowcaseLayout({
   children,
