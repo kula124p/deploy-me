@@ -10,7 +10,7 @@ const posts = [12, 3, 56, 7, 89];
 
 function processPost(id: number) {
   return (
-    <li>
+    <li key={id}>
       <Link href={`/blog/${id}`}>Post {id}</Link>
     </li>
   );
