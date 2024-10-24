@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-type Post = {
+export type Post = {
   userId: number;
   id: number;
   title: string;
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: "Blog",
 };
 
-const BASE_API_URL = "https://jsonplaceholder.typicode.com";
+export const BASE_API_URL = "https://jsonplaceholder.typicode.com";
 
 async function getPosts(): Promise<Post[]> {
   const data = await fetch(`${BASE_API_URL}/posts`);
