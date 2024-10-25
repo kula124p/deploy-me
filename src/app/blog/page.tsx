@@ -12,15 +12,25 @@ type BlogPageProps = {
   searchParams: { page: string };
 };
 
+type PagingInfo = {
+  _start?: number;
+  _limit?: number;
+};
+
 export const metadata: Metadata = {
   title: "Blog",
 };
 
 export const BASE_API_URL = "https://jsonplaceholder.typicode.com";
-const PAGE_SIZE = 8;
+const PAGE_SIZE = 6;
 
-async function getPosts(): Promise<Post[]> {
-  const data = await fetch(`${BASE_API_URL}/posts`);
+async function getPosts({
+  _start = 0,
+  _limit = PAGE_SIZE,
+}: PagingInfo): Promise<Post[]> {
+  const data = await fetch(
+    `${BASE_API_URL}/posts/?_start=${_start}&_limit=${_limit}`
+  );
   return data.json();
 }
 
@@ -71,7 +81,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const isFirstPage = currentPage === 1;
   const isLastPage = currentPage === pagesCount;
 
-  const posts = await getPosts();
+  const posts = await getPosts({ _start, _limit });
   return (
     <main className="flex min-h-screen flex-col items-center p-10">
       <h1 className="text-6xl font-extrabold tracking-tight mb-10">Blog</h1>
