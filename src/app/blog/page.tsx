@@ -75,9 +75,6 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const _start = (currentPage - 1) * PAGE_SIZE;
   const _limit = PAGE_SIZE;
 
-  console.log({ searchParams });
-  console.log({ pagesCount, currentPage, _start, _limit });
-
   const isFirstPage = currentPage === 1;
   const isLastPage = currentPage === pagesCount;
 
