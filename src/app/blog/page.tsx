@@ -68,17 +68,42 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   console.log({ searchParams });
   console.log({ pagesCount, currentPage, _start, _limit });
 
+  const isFirstPage = currentPage === 1;
+  const isLastPage = currentPage === pagesCount;
+
   const posts = await getPosts();
   return (
     <main className="flex min-h-screen flex-col items-center p-10">
       <h1 className="text-6xl font-extrabold tracking-tight mb-10">Blog</h1>
       <div className="w-full max-w-2xl mb-6">
-        <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-4 text-center">
+        <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-4 flex justify-between items-center">
+          <Link
+            href={`/blog?page=${currentPage - 1}`}
+            className={`px-4 py-2 rounded-md transition-colors duration-200 ${
+              isFirstPage
+                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+            }`}
+            aria-disabled={isFirstPage}
+          >
+            Previous
+          </Link>
           <p className="text-gray-700">
             Page{" "}
             <span className="font-semibold text-gray-900">{currentPage}</span>{" "}
             of <span className="font-semibold text-gray-900">{pagesCount}</span>
           </p>
+          <Link
+            href={`/blog?page=${currentPage + 1}`}
+            className={`px-4 py-2 rounded-md transition-colors duration-200 ${
+              isLastPage
+                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+            }`}
+            aria-disabled={isLastPage}
+          >
+            Next
+          </Link>
         </div>
       </div>
       <ul className="w-full max-w-2xl space-y-4">{posts.map(processPost)}</ul>
