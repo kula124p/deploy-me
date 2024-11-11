@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "./logo";
+import { cn } from "@/lib/utils";
 
 type Page = {
   title: string;
@@ -31,19 +32,20 @@ const pages: Page[] = [
 ];
 
 function processPage(page: Page, index: number, pathname: string) {
-  const activeStyle =
-    page.path === "/"
-      ? pathname === page.path
-        ? "text-brand-primary border rounded-sm border-brand-primary"
-        : ""
-      : pathname.startsWith(page.path)
-      ? "text-brand-primary border rounded-sm border-brand-primary"
-      : "";
+  const isActive =
+    page.path === "/" ? pathname === page.path : pathname.startsWith(page.path);
   return (
     <li key={index}>
       <Link href={page.path}>
         <span
-          className={`border rounded-sm border-transparent px-4 py-3 whitespace-nowrap hover:text-white hover:bg-brand-primary ${activeStyle}`}
+          className={cn(
+            "border rounded-sm border-transparent px-4 py-2 whitespace-nowrap",
+            { "hover:text-white hover:bg-brand-primary": !isActive },
+            {
+              "text-brand-primary border rounded-sm border-brand-primary":
+                isActive,
+            }
+          )}
         >
           {page.title}
         </span>
@@ -73,6 +75,7 @@ export function Navigation() {
         <Link href="/">
           <Logo className="text-2xl" />
         </Link>
+
         <ul className="hidden md:flex justify-between space-x-4 text-sm uppercase text-brand-text-strong">
           {pages.map((page, index) => processPage(page, index, pathname))}
         </ul>
