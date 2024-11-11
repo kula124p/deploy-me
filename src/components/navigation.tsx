@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "./logo";
@@ -46,8 +46,8 @@ function processPage(
         <span
           className={cn(
             "border rounded-sm border-transparent px-4 py-2 whitespace-nowrap",
-            { "hover:text-white hover:bg-brand-primary": !isActive },
             {
+              "hover:text-white hover:bg-brand-primary": !isActive,
               "text-brand-primary border rounded-sm border-brand-primary":
                 isActive,
             }
@@ -97,11 +97,26 @@ function Hamburger({ isOpen, toggleMenu }: HamburgerProps) {
 export function Navigation() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navRef = useRef<HTMLDivElement>(null);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
-    <nav className="py-8 border-b border-brand-stroke-weak sticky top-0 z-10 bg-brand-fill">
+    <nav
+      className="py-8 border-b border-brand-stroke-weak sticky top-0 z-10 bg-brand-fill"
+      ref={navRef}
+    >
       <div className="container flex justify-between items-center">
         <Link href="/" onClick={closeMenu}>
           <Logo className="text-2xl" />
