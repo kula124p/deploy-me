@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "./logo";
@@ -31,12 +32,17 @@ const pages: Page[] = [
   },
 ];
 
-function processPage(page: Page, index: number, pathname: string) {
+function processPage(
+  page: Page,
+  index: number,
+  pathname: string,
+  onClick?: () => void
+) {
   const isActive =
     page.path === "/" ? pathname === page.path : pathname.startsWith(page.path);
   return (
     <li key={index}>
-      <Link href={page.path}>
+      <Link href={page.path} onClick={onClick}>
         <span
           className={cn(
             "border rounded-sm border-transparent px-4 py-2 whitespace-nowrap",
@@ -54,25 +60,50 @@ function processPage(page: Page, index: number, pathname: string) {
   );
 }
 
-function Hamburger() {
+type HamburgerProps = {
+  isOpen: boolean;
+  toggleMenu: () => void;
+};
+
+function Hamburger({ isOpen, toggleMenu }: HamburgerProps) {
   return (
     <button
       className="flex md:hidden flex-col justify-center items-end w-11 h-11 p-2 space-y-1.5 rounded-sm hover:bg-brand-stroke-weak active:bg-brand-stroke-weak"
-      aria-label="Open menu"
+      aria-label={isOpen ? "Close menu" : "Open menu"}
+      onClick={toggleMenu}
     >
-      <span className="w-7 h-1 bg-brand-black rounded-full" />
-      <span className="w-4 h-1 bg-brand-black rounded-full" />
-      <span className="w-6 h-1 bg-brand-black rounded-full" />
+      <span
+        className={cn(
+          "w-7 h-1 bg-brand-black rounded-full transition-all duration-300 ease-in-out",
+          { "rotate-45 translate-y-2.5": isOpen }
+        )}
+      />
+      <span
+        className={cn(
+          "w-4 h-1 bg-brand-black rounded-full transition-all duration-300 ease-in-out",
+          { "opacity-0": isOpen }
+        )}
+      />
+      <span
+        className={cn(
+          "w-6 h-1 bg-brand-black rounded-full transition-all duration-300 ease-in-out",
+          { "w-7 -rotate-45 -translate-y-2.5": isOpen }
+        )}
+      />
     </button>
   );
 }
 
 export function Navigation() {
   const pathname = usePathname();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const closeMenu = () => setIsMenuOpen(false);
+
   return (
     <nav className="py-8 border-b border-brand-stroke-weak sticky top-0 z-10 bg-brand-fill">
       <div className="container flex justify-between items-center">
-        <Link href="/">
+        <Link href="/" onClick={closeMenu}>
           <Logo className="text-2xl" />
         </Link>
 
@@ -82,13 +113,16 @@ export function Navigation() {
         </ul>
 
         {/* Visible on mobile */}
-        <Hamburger />
+        <Hamburger isOpen={isMenuOpen} toggleMenu={toggleMenu} />
         <ul
-          className={
-            "flex md:hidden flex-col absolute top-full left-0 items-center w-full bg-brand-fill py-6 space-y-6 text-sm uppercase text-brand-text-strong border-b border-brand-stroke-weak"
-          }
+          className={cn(
+            "flex md:hidden flex-col absolute top-full left-0 items-center w-full bg-brand-fill py-6 space-y-6 text-sm uppercase text-brand-text-strong border-b border-brand-stroke-weak",
+            { hidden: !isMenuOpen }
+          )}
         >
-          {pages.map((page, index) => processPage(page, index, pathname))}
+          {pages.map((page, index) =>
+            processPage(page, index, pathname, closeMenu)
+          )}
         </ul>
       </div>
     </nav>
