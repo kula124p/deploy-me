@@ -31,21 +31,22 @@ const pages: Page[] = [
 ];
 
 function processPage(page: Page, index: number, pathname: string) {
+  const activeStyle =
+    page.path === "/"
+      ? pathname === page.path
+        ? "text-brand-primary border rounded-sm border-brand-primary"
+        : ""
+      : pathname.startsWith(page.path)
+      ? "text-brand-primary border rounded-sm border-brand-primary"
+      : "";
   return (
     <li key={index}>
-      <Link
-        href={page.path}
-        className={
-          page.path === "/"
-            ? pathname === page.path
-              ? "font-extrabold"
-              : ""
-            : pathname.startsWith(page.path)
-            ? "font-extrabold"
-            : ""
-        }
-      >
-        {page.title}
+      <Link href={page.path}>
+        <span
+          className={`border rounded-sm border-transparent px-4 py-3 whitespace-nowrap hover:text-white hover:bg-brand-primary ${activeStyle}`}
+        >
+          {page.title}
+        </span>
       </Link>
     </li>
   );
@@ -68,11 +69,11 @@ export function Navigation() {
   const pathname = usePathname();
   return (
     <nav className="py-8 border-b border-brand-stroke-weak">
-      <div className="container flex justify-between">
+      <div className="container flex justify-between items-center">
         <Link href="/">
           <Logo className="text-2xl" />
         </Link>
-        <ul className="hidden md:flex justify-center space-x-4">
+        <ul className="hidden md:flex justify-between space-x-4 text-sm uppercase text-brand-text-strong">
           {pages.map((page, index) => processPage(page, index, pathname))}
         </ul>
         <Hamburger />
