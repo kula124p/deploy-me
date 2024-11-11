@@ -25,6 +25,9 @@ const config: Config = {
         inter: ['var(--font-inter)'],
         lato: ['var(--font-lato)'],
       },
+      fontSize: {
+        base: ['15px', '1.5'],
+      },
     },
   },
   plugins: [],

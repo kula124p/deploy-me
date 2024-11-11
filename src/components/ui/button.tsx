@@ -23,8 +23,8 @@ const Button = ({
     <button
       className={cn(
         "transition duration-300 ease-in-out",
-        "group flex items-baseline space-x-2 max-w-min whitespace-nowrap",
-        "px-6 py-3 rounded-sm font-lato font-medium",
+        "group inline-flex items-center space-x-2 max-w-min whitespace-nowrap",
+        "px-6 py-4 rounded-sm font-lato font-medium leading-none",
         "bg-brand-stroke-weak text-brand-black",
         {
           "bg-brand-primary text-white": secondary,
@@ -39,7 +39,7 @@ const Button = ({
       <span>{children}</span>
       <ChevronRight
         className={cn(
-          "w-3 h-3 stroke-[3] transition-transform duration-300 ease-in-out transform",
+          "w-4 h-4 stroke-[2] transition-transform duration-300 ease-in-out transform",
           "group-hover:translate-x-1",
           iconClassName
         )}

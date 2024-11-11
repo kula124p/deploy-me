@@ -33,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${lato.variable} antialiased bg-brand-fill`}
+        className={`${inter.variable} ${lato.variable} antialiased bg-brand-fill text-base`}
       >
         <Navigation />
         {children}
