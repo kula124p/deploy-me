@@ -51,16 +51,32 @@ function processPage(page: Page, index: number, pathname: string) {
   );
 }
 
+function Hamburger() {
+  return (
+    <button
+      className="flex md:hidden flex-col justify-center items-end w-11 h-11 p-2 space-y-1.5 rounded-sm hover:bg-brand-stroke-weak active:bg-brand-stroke-weak"
+      aria-label="Open menu"
+    >
+      <span className="w-7 h-1 bg-brand-black rounded-full" />
+      <span className="w-4 h-1 bg-brand-black rounded-full" />
+      <span className="w-6 h-1 bg-brand-black rounded-full" />
+    </button>
+  );
+}
+
 export function Navigation() {
   const pathname = usePathname();
   return (
-    <nav className="flex justify-center items-baseline space-x-4 mt-8">
-      <Link href="/">
-        <Logo className="text-2xl" />
-      </Link>
-      <ul className="flex justify-center space-x-4">
-        {pages.map((page, index) => processPage(page, index, pathname))}
-      </ul>
+    <nav className="py-8 border-b border-brand-stroke-weak">
+      <div className="container flex justify-between">
+        <Link href="/">
+          <Logo className="text-2xl" />
+        </Link>
+        <ul className="hidden md:flex justify-center space-x-4">
+          {pages.map((page, index) => processPage(page, index, pathname))}
+        </ul>
+        <Hamburger />
+      </div>
     </nav>
   );
 }
