@@ -55,8 +55,9 @@ export function Navigation() {
   const pathname = usePathname();
   return (
     <nav className="flex justify-center items-baseline space-x-4 mt-8">
-      <Logo className="text-2xl" />
-      <Logo theme="dark" className="text-2xl" />
+      <Link href="/">
+        <Logo className="text-2xl" />
+      </Link>
       <ul className="flex justify-center space-x-4">
         {pages.map((page, index) => processPage(page, index, pathname))}
       </ul>
