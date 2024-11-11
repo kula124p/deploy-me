@@ -11,6 +11,15 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        brand: {
+          black: "var(--brand-black)",
+          primary: "var(--brand)",
+          "text-strong": "var(--brand-text-strong)",
+          "text-weak": "var(--brand-text-weak)",
+          "stroke-strong": "var(--brand-stroke-strong)",
+          "stroke-weak": "var(--brand-stroke-weak)",
+          "fill": "var(--brand-fill-bg)"
+        }
       },
       fontFamily: {
         inter: ['var(--font-inter)'],
