@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Post } from "../_lib/api";
 import { ArrowLeft } from "lucide-react";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -19,6 +20,9 @@ async function getPost(id: string): Promise<Post> {
 export default async function BlogPost({ params }: BlogPostProps) {
   const post = await getPost(params.id);
   const { id, title, body } = post;
+  if (!id) {
+    notFound();
+  }
   return (
     <main className="flex min-h-screen flex-col items-center p-10">
       <article className="w-full max-w-2xl bg-white shadow-lg rounded-lg overflow-hidden p-6">
