@@ -70,16 +70,26 @@ function Hamburger() {
 export function Navigation() {
   const pathname = usePathname();
   return (
-    <nav className="py-8 border-b border-brand-stroke-weak">
+    <nav className="py-8 border-b border-brand-stroke-weak sticky top-0 z-10 bg-brand-fill">
       <div className="container flex justify-between items-center">
         <Link href="/">
           <Logo className="text-2xl" />
         </Link>
 
+        {/* Hidden on mobile */}
         <ul className="hidden md:flex justify-between space-x-4 text-sm uppercase text-brand-text-strong">
           {pages.map((page, index) => processPage(page, index, pathname))}
         </ul>
+
+        {/* Visible on mobile */}
         <Hamburger />
+        <ul
+          className={
+            "flex md:hidden flex-col absolute top-full left-0 items-center w-full bg-brand-fill py-6 space-y-6 text-sm uppercase text-brand-text-strong border-b border-brand-stroke-weak"
+          }
+        >
+          {pages.map((page, index) => processPage(page, index, pathname))}
+        </ul>
       </div>
     </nav>
   );
