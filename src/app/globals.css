@@ -17,7 +17,25 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter);
+}
+
+@layer base {
+  :root {
+    --brand-black: #1a1a1a;
+    --brand: #4F46E5;
+    --brand-text-strong: #1C1A3D;
+    --brand-text-weak: #5B597A;
+    --brand-stroke-strong: #8685A6;
+    --brand-stroke-weak: #E1E0E5;
+    --brand-fill-bg: #F5F5FA;
+  }
+}
+
+@layer components {
+  .container {
+     @apply mx-auto px-8 lg:px-20 xl:px-40 max-w-screen-2xl;
+  }
 }
 
 @layer utilities {
